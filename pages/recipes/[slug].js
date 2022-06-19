@@ -21,11 +21,11 @@ export const getStaticPaths = async () => {
     //paths
     //code above is the same as code below
     paths: paths,
-    fallback: false
+    fallback: true
   }
 } 
 
-export async function getStaticProps( {params} ) {
+export async function getStaticProps({ params }) {
   const {items} = await client.getEntries({
     content_type: 'recipe',
     'fields.slug' : params.slug
@@ -40,6 +40,7 @@ export async function getStaticProps( {params} ) {
 
 
 export default function RecipeDetails({recipe}) {
+  if(!recipe) return <div>Loading...</div>
   const {featuredImage, title, cookingTime, ingredients, method} = recipe.fields
   return (
     <div>
